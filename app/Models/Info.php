@@ -8,9 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Info extends Model
 {
     use HasFactory;
-    
-    protected $fillable = [
-        'judul',
-        'isi',
-    ];
+
+    protected $fillable = ['judul','isi'];
 }

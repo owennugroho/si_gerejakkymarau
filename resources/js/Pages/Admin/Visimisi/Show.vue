@@ -1,26 +1,34 @@
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import { Head, Link } from '@inertiajs/inertia-vue3'
+
+const props = defineProps({ visimisi: Object })
+</script>
+
 <template>
-    <div>
-      <h1>Detail Visi & Misi</h1>
-      <p><strong>Judul:</strong> {{ visimisi.judul }}</p>
-      <div>
-        <strong>Isi:</strong>
-        <div v-html="visimisi.isi"></div>
+  <Head title="Detail Visi & Misi" />
+
+  <AuthenticatedLayout>
+    <template #header>
+      <div class="flex justify-between items-center">
+        <h2 class="text-xl font-semibold text-gray-800">Detail Visi & Misi</h2>
+        <Link :href="route('admin.visimisi.index')" class="text-blue-600 hover:underline">← Kembali</Link>
       </div>
-      <div style="margin-top: 1rem;">
-        <inertia-link :href="`/admin/visimisis/${visimisi.id}/edit`">Edit</inertia-link>
-        <inertia-link href="/admin/visimisis">Kembali ke Daftar</inertia-link>
+    </template>
+
+    <div class="py-6 max-w-3xl mx-auto bg-white p-6 rounded shadow space-y-4">
+      <div>
+        <h3 class="font-medium text-gray-700">Judul</h3>
+        <p class="mt-1">{{ props.visimisi.judul }}</p>
+      </div>
+      <div>
+        <h3 class="font-medium text-gray-700">Isi</h3>
+        <p class="mt-1 whitespace-pre-line">{{ props.visimisi.isi }}</p>
+      </div>
+      <div>
+        <h3 class="font-medium text-gray-700">Tanggal Dibuat</h3>
+        <p class="mt-1">{{ new Date(props.visimisi.tanggal_isi).toLocaleString() }}</p>
       </div>
     </div>
-  </template>
-  
-  <script>
-  import { Link as InertiaLink } from '@inertiajs/inertia-vue3'
-  
-  export default {
-    props: {
-      visimisi: Object,
-    },
-    components: { InertiaLink },
-  }
-  </script>
-  
+  </AuthenticatedLayout>
+</template>

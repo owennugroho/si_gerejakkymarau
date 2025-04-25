@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class JadwalTurne extends Model
 {
     use HasFactory;
-    
+
+    // (opsional jika tabelmu memang bernama "jadwal_turnes")
+    protected $table = 'jadwal_turnes';
+
     protected $fillable = [
         'lokasi',
         'tanggal',
@@ -17,9 +20,13 @@ class JadwalTurne extends Model
         'romo_id',
         'deskripsi',
     ];
-    
-    // Relasi ke model Romos
-    public function romos()
+
+    /**
+     * Relasi ke Romos.
+     * Note: nama method "romo" (singular) agar
+     * ->with('romo') dan $jadwalTurne->romo() berhasil.
+     */
+    public function romo()
     {
         return $this->belongsTo(Romos::class, 'romo_id');
     }

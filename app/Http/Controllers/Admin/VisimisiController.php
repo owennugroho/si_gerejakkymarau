@@ -9,61 +9,89 @@ use Inertia\Inertia;
 
 class VisimisiController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $visimisis = Visimisi::all();
-        return Inertia::render('Admin/Visimisis/Index', [
+
+        return Inertia::render('Admin/Visimisi/Index', [
             'visimisis' => $visimisis,
         ]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return Inertia::render('Admin/Visimisis/Create');
+        return Inertia::render('Admin/Visimisi/Create');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'isi'   => 'required|string',
+        $data = $request->validate([
+            'judul'      => 'required|string|max:255',
+            'isi'        => 'required|string',
         ]);
 
-        Visimisi::create($request->all());
+        // Otomatis set tanggal_isi ke sekarang
+        $data['tanggal_isi'] = now();
 
-        return redirect()->route('visimisis.index');
+        Visimisi::create($data);
+
+        return redirect()->route('admin.visimisi.index');
     }
 
+    /**
+     * Display the specified resource.
+     */
     public function show(Visimisi $visimisi)
     {
-        return Inertia::render('Admin/Visimisis/Show', [
+        return Inertia::render('Admin/Visimisi/Show', [
             'visimisi' => $visimisi,
         ]);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(Visimisi $visimisi)
     {
-        return Inertia::render('Admin/Visimisis/Edit', [
+        return Inertia::render('Admin/Visimisi/Edit', [
             'visimisi' => $visimisi,
         ]);
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, Visimisi $visimisi)
     {
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'isi'   => 'required|string',
+        $data = $request->validate([
+            'judul'      => 'required|string|max:255',
+            'isi'        => 'required|string',
         ]);
 
-        $visimisi->update($request->all());
+        // Perbarui tanggal_isi
+        $data['tanggal_isi'] = now();
 
-        return redirect()->route('visimisis.index');
+        $visimisi->update($data);
+
+        return redirect()->route('admin.visimisi.index');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(Visimisi $visimisi)
     {
         $visimisi->delete();
 
-        return redirect()->route('visimisis.index');
+        return redirect()->route('admin.visimisi.index');
     }
 }

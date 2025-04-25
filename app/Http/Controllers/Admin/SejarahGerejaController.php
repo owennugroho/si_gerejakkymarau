@@ -9,28 +9,19 @@ use Inertia\Inertia;
 
 class SejarahGerejaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $sejarahGerejas = SejarahGereja::all();
-        return Inertia::render('Admin/SejarahGerejas/Index', [
-            'sejarahGerejas' => $sejarahGerejas,
+        $items = SejarahGereja::all();
+        return Inertia::render('Admin/SejarahGereja/Index', [
+            'sejarahGerejas' => $items,
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return Inertia::render('Admin/SejarahGerejas/Create');
+        return Inertia::render('Admin/SejarahGereja/Create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -38,34 +29,26 @@ class SejarahGerejaController extends Controller
             'isi'   => 'required|string',
         ]);
 
-        SejarahGereja::create($request->all());
+        SejarahGereja::create($request->only('judul','isi'));
 
-        return redirect()->route('admin.sejarah-gerejas.index');
+        // sekarang route-nya 'admin.sejarah-gereja.index'
+        return redirect()->route('admin.sejarah-gereja.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(SejarahGereja $sejarahGereja)
     {
-        return Inertia::render('Admin/SejarahGerejas/Show', [
+        return Inertia::render('Admin/SejarahGereja/Show', [
             'sejarahGereja' => $sejarahGereja,
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(SejarahGereja $sejarahGereja)
     {
-        return Inertia::render('Admin/SejarahGerejas/Edit', [
+        return Inertia::render('Admin/SejarahGereja/Edit', [
             'sejarahGereja' => $sejarahGereja,
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, SejarahGereja $sejarahGereja)
     {
         $request->validate([
@@ -73,18 +56,16 @@ class SejarahGerejaController extends Controller
             'isi'   => 'required|string',
         ]);
 
-        $sejarahGereja->update($request->all());
+        $sejarahGereja->update($request->only('judul','isi'));
 
-        return redirect()->route('admin.sejarah-gerejas.index');
+        return redirect()->route('admin.sejarah-gereja.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(SejarahGereja $sejarahGereja)
     {
         $sejarahGereja->delete();
-
-        return redirect()->route('admin.sejarah-gerejas.index');
+        return redirect()->route('admin.sejarah-gereja.index');
     }
 }
+
+

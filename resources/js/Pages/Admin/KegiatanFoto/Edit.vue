@@ -1,45 +1,88 @@
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import { Head, Link, useForm } from '@inertiajs/vue3'
+
+const props = defineProps({ kegiatanfoto: Object })
+
+const form = useForm({
+  judul: props.kegiatanfoto.judul,
+  deskripsi: props.kegiatanfoto.deskripsi,
+  foto: null,
+})
+
+function onFileChange(e) {
+  form.foto = e.target.files[0]
+}
+
+function submit() {
+  form.put(route('admin.kegiatan-foto.update', props.kegiatanfoto.id))
+}
+</script>
+
 <template>
-    <div>
-      <h1>Edit Foto Kegiatan</h1>
-      <form @submit.prevent="submit">
-        <div>
-          <label>Judul:</label>
-          <input type="text" v-model="form.judul" placeholder="Opsional">
-        </div>
-        <div>
-          <label>Deskripsi:</label>
-          <textarea v-model="form.deskripsi" placeholder="Opsional"></textarea>
-        </div>
-        <div>
-          <label>Foto (URL):</label>
-          <input type="text" v-model="form.foto" required>
-        </div>
-        <button type="submit">Update</button>
-      </form>
+  <Head title="Edit Foto Kegiatan" />
+
+  <AuthenticatedLayout>
+    <template #header>
+      <h2 class="text-xl font-semibold">Edit Foto Kegiatan</h2>
+    </template>
+
+    <div class="py-6">
+      <div class="mx-auto max-w-3xl sm:px-6 lg:px-8">
+        <form
+          @submit.prevent="submit"
+          enctype="multipart/form-data"
+          class="space-y-6 bg-white p-6 shadow rounded-lg"
+        >
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Judul</label>
+            <input
+              v-model="form.judul"
+              type="text"
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+            />
+            <div v-if="form.errors.judul" class="text-red-600 text-sm">
+              {{ form.errors.judul }}
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
+            <textarea
+              v-model="form.deskripsi"
+              rows="4"
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+            ></textarea>
+            <div v-if="form.errors.deskripsi" class="text-red-600 text-sm">
+              {{ form.errors.deskripsi }}
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Ganti Foto</label>
+            <input
+              type="file"
+              @change="onFileChange"
+              class="mt-1 block w-full"
+            />
+            <div v-if="form.errors.foto" class="text-red-600 text-sm">
+              {{ form.errors.foto }}
+            </div>
+          </div>
+
+          <div class="flex space-x-2">
+            <button
+              type="submit"
+              :disabled="form.processing"
+              class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
+            >Update</button>
+            <Link
+              :href="route('admin.kegiatan-foto.index')"
+              class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+            >Batal</Link>
+          </div>
+        </form>
+      </div>
     </div>
-  </template>
-  
-  <script>
-  import { Inertia } from '@inertiajs/inertia'
-  
-  export default {
-    props: {
-      foto: Object, // Data foto kegiatan dari controller
-    },
-    data() {
-      return {
-        form: {
-          judul: this.foto.judul,
-          deskripsi: this.foto.deskripsi,
-          foto: this.foto.foto,
-        },
-      }
-    },
-    methods: {
-      submit() {
-        Inertia.put(`/admin/kegiatan-fotos/${this.foto.id}`, this.form)
-      }
-    }
-  }
-  </script>
-  
+  </AuthenticatedLayout>
+</template>

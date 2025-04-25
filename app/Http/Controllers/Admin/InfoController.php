@@ -11,59 +11,60 @@ class InfoController extends Controller
 {
     public function index()
     {
-        $infos = Info::all();
-        return Inertia::render('Admin/Infos/Index', [
-            'infos' => $infos,
+        $items = Info::all();
+
+        return Inertia::render('Admin/Info/Index', [
+            'infos' => $items,
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Admin/Infos/Create');
+        return Inertia::render('Admin/Info/Create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'judul' => 'required|string|max:255',
             'isi'   => 'required|string',
         ]);
 
-        Info::create($request->all());
+        Info::create($data);
 
-        return redirect()->route('infos.index');
+        return redirect()->route('admin.info.index');
     }
 
     public function show(Info $info)
     {
-        return Inertia::render('Admin/Infos/Show', [
+        return Inertia::render('Admin/Info/Show', [
             'info' => $info,
         ]);
     }
 
     public function edit(Info $info)
     {
-        return Inertia::render('Admin/Infos/Edit', [
+        return Inertia::render('Admin/Info/Edit', [
             'info' => $info,
         ]);
     }
 
     public function update(Request $request, Info $info)
     {
-        $request->validate([
+        $data = $request->validate([
             'judul' => 'required|string|max:255',
             'isi'   => 'required|string',
         ]);
 
-        $info->update($request->all());
+        $info->update($data);
 
-        return redirect()->route('infos.index');
+        return redirect()->route('admin.info.index');
     }
 
     public function destroy(Info $info)
     {
         $info->delete();
 
-        return redirect()->route('infos.index');
+        return redirect()->route('admin.info.index');
     }
 }

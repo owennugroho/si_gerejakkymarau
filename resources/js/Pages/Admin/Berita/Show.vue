@@ -1,37 +1,49 @@
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import { Head, Link } from '@inertiajs/vue3'
+
+const props = defineProps({
+  berita: Object,
+})
+</script>
+
 <template>
-    <div>
-      <h1>Detail Berita</h1>
-      <p><strong>Judul:</strong> {{ berita.judul }}</p>
-      <p><strong>Penulis:</strong> {{ berita.penulis }}</p>
-      <p><strong>Kutipan:</strong> {{ berita.kutipan }}</p>
-      <div>
-        <strong>Foto:</strong>
-        <div v-if="berita.foto">
-          <img :src="berita.foto" alt="Foto Berita" style="max-width: 300px;">
+  <Head title="Detail Berita" />
+
+  <AuthenticatedLayout>
+    <template #header>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        Detail Berita
+      </h2>
+    </template>
+
+    <div class="py-6">
+      <div class="mx-auto max-w-3xl sm:px-6 lg:px-8 bg-white p-6 shadow rounded-lg space-y-4">
+        <div>
+          <h3 class="text-lg font-medium text-gray-700">Judul</h3>
+          <p class="mt-1 text-gray-900">{{ props.berita.judul }}</p>
         </div>
-        <div v-else>
-          Tidak ada foto.
+        <div>
+          <h3 class="text-lg font-medium text-gray-700">Kutipan</h3>
+          <p class="mt-1 text-gray-900">{{ props.berita.kutipan }}</p>
         </div>
-      </div>
-      <div>
-        <strong>Isi Berita:</strong>
-        <div v-html="berita.isi"></div>
-      </div>
-      <div style="margin-top: 1rem;">
-        <inertia-link :href="`/admin/beritas/${berita.id}/edit`">Edit</inertia-link>
-        <inertia-link href="/admin/beritas">Kembali ke Daftar</inertia-link>
+        <div v-if="props.berita.foto">
+          <h3 class="text-lg font-medium text-gray-700">Foto</h3>
+          <img :src="`/storage/${props.berita.foto}`" class="mt-2 max-w-xs rounded" />
+        </div>
+        <div>
+          <h3 class="text-lg font-medium text-gray-700">Isi</h3>
+          <p class="mt-1 text-gray-900 whitespace-pre-line">{{ props.berita.isi }}</p>
+        </div>
+        <div class="mt-6">
+          <Link
+            :href="route('admin.berita.index')"
+            class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+          >
+            Kembali
+          </Link>
+        </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  import { Link } from '@inertiajs/inertia-vue3'
-  
-  export default {
-    props: {
-      berita: Object,
-    },
-    components: { InertiaLink: Link }
-  }
-  </script>
-  
+  </AuthenticatedLayout>
+</template>

@@ -24,15 +24,20 @@ class RomosController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'foto' => 'nullable|string',
-            'isi'  => 'nullable|string',
+        $data = $request->validate([
+            'nama' => 'required|max:255',
+            'isi' => 'required',
+            'foto' => 'required|image',
         ]);
 
-        Romos::create($request->all());
+        // simpan foto
+        $data['foto'] = $request->file('foto')
+            ->store('romos', 'public');
 
-        return redirect()->route('romos.index');
+        Romos::create($data);
+
+        // ← pastikan ini:
+        return redirect()->route('admin.romos.index');
     }
 
     public function show(Romos $romo)
@@ -54,7 +59,7 @@ class RomosController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'foto' => 'nullable|string',
-            'isi'  => 'nullable|string',
+            'isi' => 'nullable|string',
         ]);
 
         $romo->update($request->all());

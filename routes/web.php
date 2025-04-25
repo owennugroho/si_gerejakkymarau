@@ -33,24 +33,24 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
         ->name('admin.profile.destroy');
 
     // Resource Routes untuk CRUD masing-masing entitas
-    Route::resource('beritas', \App\Http\Controllers\Admin\BeritaController::class)
-        ->names('admin.beritas');
-    Route::resource('jadwal-turnes', \App\Http\Controllers\Admin\JadwalTurneController::class)
-        ->names('admin.jadwal-turnes');
-    Route::resource('stasis', \App\Http\Controllers\Admin\StasiController::class)
-        ->names('admin.stasis');
-    Route::resource('visimisis', \App\Http\Controllers\Admin\VisimisiController::class)
-        ->names('admin.visimisis');
-    Route::resource('infos', \App\Http\Controllers\Admin\InfoController::class)
-        ->names('admin.infos');
+    Route::resource('berita', \App\Http\Controllers\Admin\BeritaController::class)
+        ->names('admin.berita');
+    Route::resource('jadwal-turne', \App\Http\Controllers\Admin\JadwalTurneController::class)
+        ->names('admin.jadwal-turne');
+    Route::resource('stasi', \App\Http\Controllers\Admin\StasiController::class)
+        ->names('admin.stasi');
+    Route::resource('visimisi', \App\Http\Controllers\Admin\VisimisiController::class)
+        ->names('admin.visimisi');
+    Route::resource('info', \App\Http\Controllers\Admin\InfoController::class)
+        ->names('admin.info');
     Route::resource('romos', \App\Http\Controllers\Admin\RomosController::class)
         ->names('admin.romos');
-    Route::resource('donasis', \App\Http\Controllers\Admin\DonasiController::class)
-        ->names('admin.donasis');
-    Route::resource('kegiatan-fotos', \App\Http\Controllers\Admin\KegiatanFotoController::class)
-        ->names('admin.kegiatan-fotos');
-    Route::resource('sejarahgerejas', \App\Http\Controllers\Admin\SejarahGerejaController::class)
-        ->names('admin.sejarahgerejas');
+    Route::resource('donasi', \App\Http\Controllers\Admin\DonasiController::class)
+        ->names('admin.donasi');
+    Route::resource('kegiatan-foto', \App\Http\Controllers\Admin\KegiatanFotoController::class)
+        ->names('admin.kegiatan-foto');
+    Route::resource('sejarah-gereja', \App\Http\Controllers\Admin\SejarahGerejaController::class)
+        ->names('admin.sejarah-gereja');
 });
 
 require __DIR__ . '/auth.php';

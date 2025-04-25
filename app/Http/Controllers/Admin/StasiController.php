@@ -5,77 +5,128 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Stasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class StasiController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $stasis = Stasi::all();
-        return Inertia::render('Admin/Stasis/Index', [
+
+        return Inertia::render('Admin/Stasi/Index', [
             'stasis' => $stasis,
         ]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return Inertia::render('Admin/Stasis/Create');
+        return Inertia::render('Admin/Stasi/Create');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_stasi'      => 'required|string|max:255',
-            'desa'            => 'nullable|string|max:255',
-            'alamat'          => 'nullable|string',
-            'deskripsi'       => 'nullable|string',
-            'umat_laki'       => 'required|integer|min:0',
-            'umat_perempuan'  => 'required|integer|min:0',
-            'foto_gereja'     => 'nullable|string',
-            'foto_tanah'      => 'nullable|string',
+        $data = $request->validate([
+            'nama_stasi'     => 'required|string|max:255',
+            'desa'           => 'nullable|string|max:255',
+            'alamat'         => 'nullable|string',
+            'deskripsi'      => 'nullable|string',
+            'umat_laki'      => 'required|integer|min:0',
+            'umat_perempuan' => 'required|integer|min:0',
+            'foto_gereja'    => 'nullable|image',
+            'foto_tanah'     => 'nullable|image',
         ]);
 
-        Stasi::create($request->all());
+        // simpan file jika ada
+        if ($request->hasFile('foto_gereja')) {
+            $data['foto_gereja'] = $request->file('foto_gereja')
+                                         ->store('stasi/foto_gereja', 'public');
+        }
+        if ($request->hasFile('foto_tanah')) {
+            $data['foto_tanah'] = $request->file('foto_tanah')
+                                        ->store('stasi/foto_tanah', 'public');
+        }
 
-        return redirect()->route('stasis.index');
+        Stasi::create($data);
+
+        return redirect()->route('admin.stasi.index');
     }
 
+    /**
+     * Display the specified resource.
+     */
     public function show(Stasi $stasi)
     {
-        return Inertia::render('Admin/Stasis/Show', [
+        return Inertia::render('Admin/Stasi/Show', [
             'stasi' => $stasi,
         ]);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(Stasi $stasi)
     {
-        return Inertia::render('Admin/Stasis/Edit', [
+        return Inertia::render('Admin/Stasi/Edit', [
             'stasi' => $stasi,
         ]);
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, Stasi $stasi)
     {
-        $request->validate([
-            'nama_stasi'      => 'required|string|max:255',
-            'desa'            => 'nullable|string|max:255',
-            'alamat'          => 'nullable|string',
-            'deskripsi'       => 'nullable|string',
-            'umat_laki'       => 'required|integer|min:0',
-            'umat_perempuan'  => 'required|integer|min:0',
-            'foto_gereja'     => 'nullable|string',
-            'foto_tanah'      => 'nullable|string',
+        $data = $request->validate([
+            'nama_stasi'     => 'required|string|max:255',
+            'desa'           => 'nullable|string|max:255',
+            'alamat'         => 'nullable|string',
+            'deskripsi'      => 'nullable|string',
+            'umat_laki'      => 'required|integer|min:0',
+            'umat_perempuan' => 'required|integer|min:0',
+            'foto_gereja'    => 'nullable|image',
+            'foto_tanah'     => 'nullable|image',
         ]);
 
-        $stasi->update($request->all());
+        // replace file jika di‐upload baru
+        if ($request->hasFile('foto_gereja')) {
+            Storage::disk('public')->delete($stasi->foto_gereja);
+            $data['foto_gereja'] = $request->file('foto_gereja')
+                                         ->store('stasi/foto_gereja', 'public');
+        }
+        if ($request->hasFile('foto_tanah')) {
+            Storage::disk('public')->delete($stasi->foto_tanah);
+            $data['foto_tanah'] = $request->file('foto_tanah')
+                                        ->store('stasi/foto_tanah', 'public');
+        }
 
-        return redirect()->route('stasis.index');
+        $stasi->update($data);
+
+        return redirect()->route('admin.stasi.index');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(Stasi $stasi)
     {
+        // hapus file gambar
+        Storage::disk('public')->delete([
+            $stasi->foto_gereja,
+            $stasi->foto_tanah,
+        ]);
+
         $stasi->delete();
 
-        return redirect()->route('stasis.index');
+        return redirect()->route('admin.stasi.index');
     }
 }
