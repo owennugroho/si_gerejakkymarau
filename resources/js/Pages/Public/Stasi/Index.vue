@@ -1,40 +1,61 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3'
+import GuestLayout from '@/Layouts/GuestLayout.vue'
 
 const props = defineProps({
-  stasis: Array, // [{id, nama_stasi, desa, alamat, umat_laki, umat_perempuan, foto_gereja, foto_tanah, ...},…]
-});
+  stasis: Array, // di‐controller: ['stasis' => Stasi::all()]
+})
 </script>
 
 <template>
   <Head title="Daftar Stasi" />
 
-  <div class="max-w-4xl mx-auto py-8 px-4">
-    <h1 class="text-3xl font-semibold mb-6">Daftar Stasi</h1>
+  <GuestLayout>
+    <div class="container mx-auto py-8 px-4">
+      <h1 class="text-3xl md:text-4xl font-bold mb-6 text-center text-amber-500">
+        Daftar Stasi
+      </h1>
 
-    <ul class="space-y-4">
-      <li
-        v-for="s in stasis"
-        :key="s.id"
-        class="border rounded-lg p-4 hover:shadow transition"
-      >
-        <Link
-          :href="route('stasi.show', s.id)"
-          class="text-xl font-medium text-blue-600 hover:underline"
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div
+          v-for="s in stasis"
+          :key="s.id"
+          class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden"
         >
-          {{ s.nama_stasi }}
-        </Link>
-        <p class="text-gray-600">
-          {{ s.desa }} — {{ s.alamat }}
-        </p>
-        <p class="text-gray-700 mt-2">
-          Umat: Laki {{ s.umat_laki }}, Perempuan {{ s.umat_perempuan }}
-        </p>
-      </li>
-    </ul>
+          <!-- Foto Gereja -->
+          <div class="h-48 bg-gray-100 overflow-hidden">
+            <img
+              v-if="s.foto_gereja"
+              :src="`/storage/${s.foto_gereja}`"
+              alt="Foto Stasi"
+              class="w-full h-full object-cover"
+            />
+            <div v-else class="w-full h-full flex items-center justify-center text-gray-400">
+              No Image
+            </div>
+          </div>
 
-    <div v-if="!stasis.length" class="text-center text-gray-500 py-10">
-      Belum ada data Stasi.
+          <!-- Body Card -->
+          <div class="p-4">
+            <h2 class="text-xl font-medium mb-2 text-gray-900">{{ s.nama_stasi }}</h2>
+            <p class="text-sm text-gray-600 line-clamp-3 mb-4">
+              {{ s.deskripsi || 'Tidak ada deskripsi.' }}
+            </p>
+            <div class="mt-auto text-right">
+              <Link
+                :href="route('stasi.show', s.id)"
+                class="text-blue-600 hover:underline"
+              >
+                Lihat Detail →
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="!stasis.length" class="col-span-full text-center text-gray-500 py-12">
+          Belum ada data Stasi.
+        </div>
+      </div>
     </div>
-  </div>
+  </GuestLayout>
 </template>

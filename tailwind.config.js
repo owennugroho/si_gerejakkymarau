@@ -1,6 +1,7 @@
 import defaultTheme from 'tailwindcss/defaultTheme'
-import forms from '@tailwindcss/forms'
-import daisyui from 'daisyui'
+import forms       from '@tailwindcss/forms'
+import lineClamp   from '@tailwindcss/line-clamp'
+import daisyui     from 'daisyui'
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -10,7 +11,6 @@ export default {
     './resources/views/**/*.blade.php',
     './resources/js/**/*.vue',
   ],
-
   theme: {
     extend: {
       fontFamily: {
@@ -18,13 +18,13 @@ export default {
       },
     },
   },
-
   plugins: [
     forms,
+    lineClamp, 
     daisyui,
   ],
 
   daisyui: {
-    themes: ['light', 'dark'], // or your custom theme names
+    themes: ['light','dark'],
   },
 }

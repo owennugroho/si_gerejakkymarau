@@ -10,11 +10,11 @@ class VisimisiController extends Controller
 {
     public function index()
     {
-        // ambil entri terakhir (atau ID=1, sesuai kebutuhan)
-        $item = Visimisi::latest()->first();
+        // Ambil semua entri
+        $visimisis = Visimisi::orderByDesc('created_at')->get();
 
-        return Inertia::render('Public/Visimisi/Show', [
-            'visimisi' => $item,
+        return Inertia::render('Public/Visimisi/Index', [
+            'visimisis' => $visimisis,
         ]);
     }
 }

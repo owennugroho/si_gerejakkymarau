@@ -10,14 +10,17 @@ class BeritaController extends Controller
 {
     public function index()
     {
-        $beritas = Berita::all();
+        $beritas = Berita::orderBy('id', 'desc')->get();
+
         return Inertia::render('Public/Berita/Index', [
             'beritas' => $beritas,
         ]);
     }
 
-    public function show(Berita $berita)
+    public function show($id)
     {
+        $berita = Berita::findOrFail($id);
+
         return Inertia::render('Public/Berita/Show', [
             'berita' => $berita,
         ]);

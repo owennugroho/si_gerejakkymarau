@@ -14,7 +14,7 @@ class SejarahGerejaController extends Controller
         $history = SejarahGereja::latest()->first();
 
         return Inertia::render('Public/SejarahGereja/Show', [
-            'history' => $history,
+            'sejarahGereja' => $history,
         ]);
     }
 }

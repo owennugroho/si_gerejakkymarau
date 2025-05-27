@@ -1,45 +1,63 @@
 <script setup>
-import { ref } from 'vue'
-import { Inertia } from '@inertiajs/inertia'
-import { useForm } from '@inertiajs/inertia-vue3'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import { Head, Link, useForm } from '@inertiajs/vue3'
 
 const form = useForm({
   judul: '',
   isi: '',
 })
 
-// For Edit.vue you’d populate:
-// const form = useForm({ judul: props.info.judul, isi: props.info.isi })
-
 function submit() {
-  form.post(route('admin.info.store'))
+  form.post(route('admin.info.store'), { preserveScroll: true })
 }
 </script>
 
 <template>
-  <div>
-    <h1 class="text-xl mb-4">Tambah Info</h1>
-    <form @submit.prevent="submit">
-      <div class="mb-4">
-        <label>Judul</label>
-        <input v-model="form.judul"
-               class="w-full border px-2 py-1 rounded"/>
-        <div v-if="form.errors.judul"
-             class="text-red-600 text-sm">{{ form.errors.judul }}</div>
-      </div>
+  <Head title="Tambah Info" />
 
-      <div class="mb-4">
-        <label>Isi</label>
-        <textarea v-model="form.isi"
-                  class="w-full border px-2 py-1 rounded"></textarea>
-        <div v-if="form.errors.isi"
-             class="text-red-600 text-sm">{{ form.errors.isi }}</div>
+  <AuthenticatedLayout>
+    <template #header>
+      <div class="flex justify-between items-center">
+        <h2 class="text-xl font-semibold text-gray-800">Tambah Info</h2>
+        <Link
+          :href="route('admin.info.index')"
+          class="text-blue-600 hover:underline"
+        >
+          ← Kembali
+        </Link>
       </div>
+    </template>
 
-      <button type="submit"
-              class="px-4 py-2 bg-blue-600 text-white rounded">
-        Simpan
-      </button>
-    </form>
-  </div>
+    <div class="py-6 max-w-3xl mx-auto bg-white p-6 rounded shadow">
+      <form @submit.prevent="submit" class="space-y-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Judul</label>
+          <input
+            v-model="form.judul"
+            type="text"
+            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+          />
+          <p v-if="form.errors.judul" class="text-red-600 text-sm">{{ form.errors.judul }}</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Isi</label>
+          <textarea
+            v-model="form.isi"
+            rows="6"
+            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+          ></textarea>
+          <p v-if="form.errors.isi" class="text-red-600 text-sm">{{ form.errors.isi }}</p>
+        </div>
+
+        <button
+          type="submit"
+          :disabled="form.processing"
+          class="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
+        >
+          Simpan
+        </button>
+      </form>
+    </div>
+  </AuthenticatedLayout>
 </template>

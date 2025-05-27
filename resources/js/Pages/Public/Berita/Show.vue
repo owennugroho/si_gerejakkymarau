@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3'
+import GuestLayout from '@/Layouts/GuestLayout.vue'
 
 const props = defineProps({
   berita: Object,
@@ -9,19 +10,30 @@ const props = defineProps({
 <template>
   <Head :title="berita.judul" />
 
-  <div class="prose mx-auto py-8">
-    <h1>{{ berita.judul }}</h1>
-    <p class="text-sm text-gray-600">Oleh {{ berita.penulis }} pada {{ new Date(berita.created_at).toLocaleDateString() }}</p>
-    <img 
-      v-if="berita.foto" 
-      :src="`/storage/${berita.foto}`" 
-      alt="" 
-      class="mt-4 mb-4 w-full rounded"
-    />
-    <div v-html="berita.isi"></div>
+  <GuestLayout>
+    <div class="max-w-3xl mx-auto py-8 px-4">
+      <h1 class="text-3xl font-semibold mb-4 text-gray-900 text-center">
+        {{ berita.judul }}
+      </h1>
 
-    <div class="mt-8">
-      <Link href="/" class="text-blue-600 hover:underline">← Kembali ke Berita</Link>
+      <p class="text-sm text-gray-600 mb-6 text-center">
+        Oleh {{ berita.penulis }}
+      </p>
+
+      <img
+        v-if="berita.foto"
+        :src="`/storage/${berita.foto}`"
+        alt="Foto Berita"
+        class="w-full h-auto rounded mb-6"
+      />
+
+      <div class="prose prose-lg mx-auto text-gray-800">
+        <div v-html="berita.isi"></div>
+      </div>
     </div>
-  </div>
+  </GuestLayout>
 </template>
+
+<style scoped>
+/* tidak ada perubahan khusus */
+</style>

@@ -1,191 +1,202 @@
+<!-- resources/js/Layouts/AuthenticatedLayout.vue -->
 <template>
-  <div>
-    <div class="min-h-screen bg-gray-100">
-      <nav class="border-b border-gray-100 bg-white">
-        <!-- Primary Navigation Menu -->
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="flex h-16 justify-between">
-            <div class="flex">
-              <!-- Logo -->
-              <div class="flex shrink-0 items-center">
-                <Link :href="route('admin.dashboard')">
-                <ApplicationLogo class="block h-9 w-auto fill-current text-gray-800" />
-                </Link>
-              </div>
-              <!-- Navigation Links -->
-              <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
-                <!-- Dashboard Link -->
-                <NavLink :href="route('admin.dashboard')" :active="route().current('admin.dashboard')">
-                  Dashboard
-                </NavLink>
+  <div class="flex flex-col min-h-screen">
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
+        <!-- Logo + Title -->
+        <Link :href="route('admin.dashboard')" class="flex items-center space-x-2">
+          <ApplicationLogo class="h-9 w-auto fill-current text-gray-800" />
+          <span class="text-xl font-semibold text-gray-800">
+            Gereja Kanak-kanak Yesus Marau
+          </span>
+        </Link>
 
-                <!-- Menu: Profil Gereja dengan submenu -->
-                <Dropdown align="left" width="60">
-                  <template #trigger>
-                    <button type="button"
-                      class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">
-                      Profil Gereja
-                      <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-                  </template>
-                  <template #content>
-                    <DropdownLink :href="route('admin.romos.index')">Romo</DropdownLink>
-                    <DropdownLink :href="route('admin.stasi.index')">Stasi</DropdownLink>
-                    <DropdownLink :href="route('admin.visimisi.index')">Visimisi</DropdownLink>
-                    <DropdownLink :href="route('admin.sejarah-gereja.index')">Sejarah Gereja</DropdownLink>
-                  </template>
-                </Dropdown>
+        <!-- Desktop Menu -->
+        <div class="hidden sm:flex sm:space-x-6">
+          <!-- Dashboard -->
+          <NavLink
+            :href="route('admin.dashboard')"
+            :active="route().current('admin.dashboard')"
+            class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:text-gray-900"
+            active-class="underline"
+          >
+            Dashboard
+          </NavLink>
 
-                <!-- Menu: Jadwal Turne (tanpa submenu) -->
-                <NavLink :href="route('admin.jadwal-turne.index')"
-                  :active="route().current('admin.jadwal-turne.index')">
-                  Jadwal Turne
-                </NavLink>
-
-                <!-- Menu: Informasi Gereja dengan submenu -->
-                <Dropdown align="left" width="60">
-                  <template #trigger>
-                    <button type="button"
-                      class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">
-                      Informasi Gereja
-                      <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-                  </template>
-                  <template #content>
-                    <DropdownLink :href="route('admin.donasi.index')">Donasi</DropdownLink>
-                    <DropdownLink :href="route('admin.info.index')">Info</DropdownLink>
-                  </template>
-                </Dropdown>
-
-                <!-- Menu: Berita dengan submenu -->
-                <Dropdown align="left" width="60">
-                  <template #trigger>
-                    <button type="button"
-                      class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">
-                      Berita
-                      <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-                  </template>
-                  <template #content>
-                    <DropdownLink :href="route('admin.berita.index')">Berita</DropdownLink>
-                    <DropdownLink :href="route('admin.kegiatan-foto.index')">Foto Kegiatan</DropdownLink>
-                  </template>
-                </Dropdown>
-              </div>
-            </div>
-
-            <div class="hidden sm:ms-6 sm:flex sm:items-center">
-              <!-- Settings Dropdown -->
-              <div class="relative ms-3">
-                <Dropdown align="right" width="48">
-                  <template #trigger>
-                    <span class="inline-flex rounded-md">
-                      <button type="button"
-                        class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none">
-                        {{ $page.props.auth.user.name }}
-                        <svg class="-me-0.5 ms-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                          fill="currentColor">
-                          <path fill-rule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clip-rule="evenodd" />
-                        </svg>
-                      </button>
-                    </span>
-                  </template>
-                  <template #content>
-                    <DropdownLink :href="route('admin.profile.edit')">
-                      Profile
-                    </DropdownLink>
-                    <DropdownLink :href="route('logout')" method="post" as="button">
-                      Log Out
-                    </DropdownLink>
-                  </template>
-                </Dropdown>
-              </div>
-            </div>
-
-            <!-- Hamburger (Responsive) -->
-            <div class="-me-2 flex items-center sm:hidden">
-              <button @click="showingNavigationDropdown = !showingNavigationDropdown"
-                class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none">
-                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                  <path :class="{ 'hidden': showingNavigationDropdown, 'inline-flex': !showingNavigationDropdown }"
-                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                  <path :class="{ 'hidden': !showingNavigationDropdown, 'inline-flex': showingNavigationDropdown }"
-                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+          <!-- Profil Gereja -->
+          <Dropdown align="left" width="48">
+            <template #trigger>
+              <button
+                class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-800 hover:text-gray-900"
+                :class="{ 'underline': isAnyActive([
+                    'admin.sejarah-gereja.index',
+                    'admin.visimisi.index',
+                    'admin.romos.index',
+                    'admin.stasi.index'
+                  ]) }"
+              >
+                Profil Gereja
+                <ChevronDownIcon class="ml-1 h-4 w-4 text-gray-800" />
               </button>
-            </div>
-          </div>
+            </template>
+            <template #content>
+              <DropdownLink :href="route('admin.sejarah-gereja.index')">Sejarah Gereja</DropdownLink>
+              <DropdownLink :href="route('admin.visimisi.index')">Visi & Misi</DropdownLink>
+              <DropdownLink :href="route('admin.romos.index')">Pastor Paroki</DropdownLink>
+              <DropdownLink :href="route('admin.stasi.index')">Stasi</DropdownLink>
+            </template>
+          </Dropdown>
+
+          <!-- Jadwal Turne -->
+          <NavLink
+            :href="route('admin.jadwal-turne.index')"
+            :active="route().current('admin.jadwal-turne.index')"
+            class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:text-gray-900"
+            active-class="underline"
+          >
+            Jadwal Turne
+          </NavLink>
+
+          <!-- Informasi Gereja -->
+          <Dropdown align="left" width="48">
+            <template #trigger>
+              <button
+                class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-800 hover:text-gray-900"
+                :class="{ 'underline': isAnyActive([
+                    'admin.donasi.index',
+                    'admin.info.index',
+                    'admin.kontak.index'
+                  ]) }"
+              >
+                Informasi Gereja
+                <ChevronDownIcon class="ml-1 h-4 w-4 text-gray-800" />
+              </button>
+            </template>
+            <template #content>
+              <DropdownLink :href="route('admin.donasi.index')">Donasi</DropdownLink>
+              <DropdownLink :href="route('admin.info.index')">Info</DropdownLink>
+              <DropdownLink :href="route('admin.kontak.index')">Kontak</DropdownLink>
+            </template>
+          </Dropdown>
+
+          <!-- Berita -->
+          <Dropdown align="left" width="48">
+            <template #trigger>
+              <button
+                class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-800 hover:text-gray-900"
+                :class="{ 'underline': isAnyActive([
+                    'admin.berita.index',
+                    'admin.kegiatan-foto.index'
+                  ]) }"
+              >
+                Berita
+                <ChevronDownIcon class="ml-1 h-4 w-4 text-gray-800" />
+              </button>
+            </template>
+            <template #content>
+              <DropdownLink :href="route('admin.berita.index')">Berita</DropdownLink>
+              <DropdownLink :href="route('admin.kegiatan-foto.index')">Foto Kegiatan</DropdownLink>
+            </template>
+          </Dropdown>
         </div>
 
-        <!-- Responsive Navigation Menu -->
-        <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" class="sm:hidden">
-          <div class="space-y-1 pb-3 pt-2">
-            <ResponsiveNavLink :href="route('admin.dashboard')" :active="route().current('admin.dashboard')">
-              Dashboard
-            </ResponsiveNavLink>
-            <!-- Tambahkan rute responsif lain jika diperlukan -->
+        <!-- User & Mobile Hamburger -->
+        <div class="flex items-center">
+          <!-- User dropdown -->
+          <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <Dropdown align="right" width="48">
+              <template #trigger>
+                <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-800 hover:text-gray-900">
+                  {{ $page.props.auth.user.name }}
+                  <ChevronDownIcon class="ml-1 h-4 w-4 text-gray-800" />
+                </button>
+              </template>
+              <template #content>
+                <DropdownLink :href="route('admin.profile.edit')">Profile</DropdownLink>
+                <DropdownLink :href="route('logout')" method="post" as="button">Log Out</DropdownLink>
+              </template>
+            </Dropdown>
           </div>
-
-          <div class="border-t border-gray-200 pb-1 pt-4">
-            <div class="px-4">
-              <div class="text-base font-medium text-gray-800">
-                {{ $page.props.auth.user.name }}
-              </div>
-              <div class="text-sm font-medium text-gray-500">
-                {{ $page.props.auth.user.email }}
-              </div>
-            </div>
-
-            <div class="mt-3 space-y-1">
-              <ResponsiveNavLink :href="route('admin.profile.edit')">
-                Profile
-              </ResponsiveNavLink>
-              <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                Log Out
-              </ResponsiveNavLink>
-            </div>
+          <!-- Hamburger -->
+          <div class="sm:hidden -me-2">
+            <button
+              @click="showingNavigationDropdown = !showingNavigationDropdown"
+              class="inline-flex items-center justify-center p-2 rounded-md text-gray-800 hover:text-gray-900 focus:outline-none"
+            >
+              <Bars3Icon v-if="!showingNavigationDropdown" class="h-6 w-6" />
+              <XMarkIcon v-else                      class="h-6 w-6" />
+            </button>
           </div>
         </div>
-      </nav>
+      </div>
 
+      <!-- Mobile Menu -->
+      <div v-show="showingNavigationDropdown" class="sm:hidden bg-white border-b border-gray-100">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+          <ResponsiveNavLink
+            :href="route('admin.dashboard')"
+            :active="route().current('admin.dashboard')"
+            class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-gray-900"
+          >
+            Dashboard
+          </ResponsiveNavLink>
+          <!-- tambah link mobile sesuai kebutuhan -->
+        </div>
+      </div>
+    </nav>
+
+    <!-- HEADER & CONTENT WRAPPER -->
+    <div class="flex-1 pt-16">
       <!-- Page Heading -->
-      <header class="bg-white shadow" v-if="$slots.header">
-        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <header v-if="$slots.header" class="bg-white shadow">
+        <div class="max-w-7xl mx-auto px-4 py-6">
           <slot name="header" />
         </div>
       </header>
-
       <!-- Page Content -->
-      <main>
+      <main class="bg-white flex-1">
         <slot />
       </main>
     </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-green-800 text-white py-10">
+      <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Footer content… -->
+      </div>
+      <div class="text-center text-gray-200 mt-8 text-sm">
+        © {{ new Date().getFullYear() }} Gereja Kanak-kanak Yesus Marau
+      </div>
+    </footer>
+
+    <!-- Visit Us panel tetap ada -->
+    <VisitUsPanel />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { Link } from '@inertiajs/vue3'
+import { usePage } from '@inertiajs/vue3'
 import ApplicationLogo from '@/Components/ApplicationLogo.vue'
+import NavLink from '@/Components/NavLink.vue'
 import Dropdown from '@/Components/Dropdown.vue'
 import DropdownLink from '@/Components/DropdownLink.vue'
-import NavLink from '@/Components/NavLink.vue'
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue'
-import { Link } from '@inertiajs/vue3'
+import VisitUsPanel from '@/Components/VisitUsPanel.vue'
+import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/vue/24/solid'
 
+// Mobile menu state
 const showingNavigationDropdown = ref(false)
+
+// Helper: cek active route list
+const page = usePage()
+function isAnyActive(names) {
+  return names.some(n => page.url.includes(n.replace(/\./g, '/')))
+}
 </script>
 
 <style scoped>
-/* Sesuaikan styling jika perlu */
+/* tidak perlu override khusus */
 </style>

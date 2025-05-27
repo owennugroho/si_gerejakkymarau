@@ -1,37 +1,75 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3'
+import GuestLayout from '@/Layouts/GuestLayout.vue'
 
 const props = defineProps({
-  fotos: Array, // array of { id, judul, deskripsi, foto, created_at, ... }
-});
+  fotos: {
+    type: Array,
+    default: () => [],
+  },
+})
 </script>
 
 <template>
-  <Head title="Foto Kegiatan"/>
+  <Head title="Galeri Foto Kegiatan" />
 
-  <div class="max-w-4xl mx-auto py-8">
-    <h1 class="text-3xl mb-6">Galeri Foto Kegiatan</h1>
+  <GuestLayout>
+    <div class="container mx-auto px-4 py-12">
+      <h1 class="text-4xl font-bold text-center text-green-800 mb-10">
+        Galeri Foto Kegiatan
+      </h1>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div v-for="f in fotos" :key="f.id" class="bg-white rounded shadow overflow-hidden">
-        <img
-          :src="`/storage/${f.foto}`"
-          alt=""
-          class="h-48 w-full object-cover"
-        />
-        <div class="p-4">
-          <h2 class="font-semibold mb-2">{{ f.judul }}</h2>
-          <p class="text-sm text-gray-600">{{ f.deskripsi.substr(0, 80) }}…</p>
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <template v-if="fotos.length">
           <Link
+            v-for="f in fotos"
+            :key="f.id"
             :href="route('foto-kegiatan.show', f.id)"
-            class="mt-3 inline-block text-blue-600 hover:underline"
-          >Lihat Detail →</Link>
+            class="group block bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition"
+          >
+            <!-- Thumbnail -->
+            <div class="h-48 overflow-hidden">
+              <img
+                v-if="f.foto"
+                :src="`/storage/${f.foto}`"
+                alt="Foto {{ f.judul }}"
+                class="w-full h-full object-cover"
+              />
+              <div
+                v-else
+                class="flex h-full items-center justify-center bg-gray-100 text-gray-400"
+              >
+                No Image
+              </div>
+            </div>
+
+            <!-- Card body -->
+            <div class="p-5 flex flex-col h-full">
+              <h2 class="text-xl font-semibold text-gray-800 mb-3">
+                {{ f.judul }}
+              </h2>
+              <p class="text-gray-600 text-sm mb-5 line-clamp-3">
+                {{ f.deskripsi }}
+              </p>
+              <div class="mt-auto text-right">
+                <span class="text-indigo-600 group-hover:text-indigo-800 font-medium">
+                  Lihat Detail →
+                </span>
+              </div>
+            </div>
+          </Link>
+        </template>
+
+        <div
+          v-else
+          class="col-span-full text-center text-gray-500 py-16"
+        >
+          Belum ada foto kegiatan.
         </div>
       </div>
     </div>
-
-    <div v-if="!fotos.length" class="text-center text-gray-500 py-10">
-      Belum ada foto kegiatan.
-    </div>
-  </div>
+  </GuestLayout>
 </template>
+
+<style scoped>
+</style>

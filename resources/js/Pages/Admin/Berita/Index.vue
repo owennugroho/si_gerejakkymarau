@@ -55,7 +55,7 @@ function destroy(id) {
                   <th class="px-6 py-3"></th>
                 </tr>
               </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
+              <tbody class="bg-white divide-y divide-gray-900">
                 <tr v-for="b in props.beritas" :key="b.id">
                   <td class="px-6 py-4 whitespace-nowrap">{{ b.id }}</td>
                   <td class="px-6 py-4 whitespace-nowrap">{{ b.judul }}</td>
