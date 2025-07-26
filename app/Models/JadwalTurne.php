@@ -4,16 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Romos;  
+use App\Models\Stasi;  
 
 class JadwalTurne extends Model
 {
     use HasFactory;
 
-    // (opsional jika tabelmu memang bernama "jadwal_turnes")
     protected $table = 'jadwal_turnes';
 
     protected $fillable = [
-        'lokasi',
+        'stasi_id',    
         'tanggal',
         'hari',
         'jam_mulai',
@@ -22,12 +23,18 @@ class JadwalTurne extends Model
     ];
 
     /**
-     * Relasi ke Romos.
-     * Note: nama method "romo" (singular) agar
-     * ->with('romo') dan $jadwalTurne->romo() berhasil.
+     * Relasi ke Romo (pastor).
      */
     public function romo()
     {
         return $this->belongsTo(Romos::class, 'romo_id');
+    }
+
+    /**
+     * Relasi ke Stasi (lokasi).
+     */
+    public function stasi()
+    {
+        return $this->belongsTo(Stasi::class, 'stasi_id');
     }
 }

@@ -13,17 +13,18 @@ class HomeController extends Controller
     public function index()
     {
         // ambil 6 berita terbaru
-        $beritas = Berita::orderBy('created_at','desc')
-                         ->take(6)
-                         ->get(['id','judul','penulis','foto','isi','created_at']);
+        $beritas = Berita::orderBy('created_at', 'desc')
+            ->take(6)
+            ->get(['id', 'judul', 'penulis', 'foto', 'isi', 'created_at']);
 
-        // ambil jadwal turne bulan ini
-        $jadwalTurnes = JadwalTurne::whereMonth('tanggal', now()->month)
-                                   ->orderBy('tanggal')
-                                   ->get(['id','lokasi','tanggal','hari','jam_mulai']);
+        // ambil jadwal turne bulan ini, eager‐load romo & stasi
+        $jadwalTurnes = JadwalTurne::with(['romo', 'stasi'])
+            ->whereMonth('tanggal', now()->month)
+            ->orderBy('tanggal')
+            ->get();
 
         return Inertia::render('Public/Home', [
-            'beritas'      => $beritas,
+            'beritas' => $beritas,
             'jadwalTurnes' => $jadwalTurnes,
         ]);
     }

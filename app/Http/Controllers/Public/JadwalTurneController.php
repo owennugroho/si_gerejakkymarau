@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
@@ -10,21 +9,19 @@ class JadwalTurneController extends Controller
 {
     public function index()
     {
-        // ambil semua jadwal, terbaru dulu
-        $jadwal = JadwalTurne::with('romo')
-                   ->orderBy('tanggal','asc')
-                   ->get();
+        $jadwals = JadwalTurne::with(['romo','stasi'])
+                     ->orderBy('tanggal','asc')
+                     ->get();
 
         return Inertia::render('Public/JadwalTurne/Index', [
-            'jadwals' => $jadwal,
+            'jadwals' => $jadwals,
         ]);
     }
 
     public function show(JadwalTurne $jadwalTurne)
     {
-        $jadwalTurne->load('romo'); // pastikan relasi romo ada
         return Inertia::render('Public/JadwalTurne/Show', [
-            'jadwal' => $jadwalTurne,
+            'jadwal' => $jadwalTurne->load(['romo','stasi']),
         ]);
     }
 }

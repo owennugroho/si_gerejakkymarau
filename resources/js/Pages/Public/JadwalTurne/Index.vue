@@ -27,7 +27,7 @@
                   <th class="px-4 py-3 text-center text-sm font-medium text-white">Tanggal</th>
                   <th class="px-4 py-3 text-center text-sm font-medium text-white">Hari</th>
                   <th class="px-4 py-3 text-center text-sm font-medium text-white">Waktu</th>
-                  <th class="px-4 py-3 text-center text-sm font-medium text-white">Lokasi</th>
+                  <th class="px-4 py-3 text-center text-sm font-medium text-white">Stasi / Lokasi</th>
                   <th class="px-4 py-3 text-center text-sm font-medium text-white">Keterangan</th>
                 </tr>
               </thead>
@@ -38,7 +38,7 @@
                   </td>
                   <td class="px-4 py-3 text-center text-gray-800">{{ j.hari }}</td>
                   <td class="px-4 py-3 text-center text-gray-800">{{ j.jam_mulai }}</td>
-                  <td class="px-4 py-3 text-center text-gray-800">{{ j.lokasi }}</td>
+                  <td class="px-4 py-3 text-center text-gray-800">{{ jadwal.stasi.nama_stasi }}</td>
                   <td class="px-4 py-3 text-left   text-gray-800">{{ j.deskripsi }}</td>
                 </tr>
                 <tr v-if="filtered.length === 0">

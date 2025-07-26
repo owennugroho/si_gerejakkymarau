@@ -1,41 +1,37 @@
 <!-- resources/js/Layouts/AuthenticatedLayout.vue -->
 <template>
-  <div class="flex flex-col min-h-screen">
+  <div class="flex flex-col min-h-screen text-black">
     <!-- NAVBAR -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
         <!-- Logo + Title -->
         <Link :href="route('admin.dashboard')" class="flex items-center space-x-2">
-          <ApplicationLogo class="h-9 w-auto fill-current text-gray-800" />
-          <span class="text-xl font-semibold text-gray-800">
-            Gereja Kanak-kanak Yesus Marau
-          </span>
+        <ApplicationLogo class="h-9 w-auto fill-current text-gray-800" />
+        <span class="text-xl font-semibold text-gray-800">
+          Gereja Kanak-kanak Yesus Marau
+        </span>
         </Link>
 
         <!-- Desktop Menu -->
         <div class="hidden sm:flex sm:space-x-6">
           <!-- Dashboard -->
-          <NavLink
-            :href="route('admin.dashboard')"
-            :active="route().current('admin.dashboard')"
-            class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:text-gray-900"
-            active-class="underline"
-          >
+          <NavLink :href="route('admin.dashboard')" :active="route().current('admin.dashboard')"
+            class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:text-gray-900" active-class="underline">
             Dashboard
           </NavLink>
 
           <!-- Profil Gereja -->
           <Dropdown align="left" width="48">
             <template #trigger>
-              <button
-                class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-800 hover:text-gray-900"
-                :class="{ 'underline': isAnyActive([
+              <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-800 hover:text-gray-900"
+                :class="{
+                  'underline': isAnyActive([
                     'admin.sejarah-gereja.index',
                     'admin.visimisi.index',
                     'admin.romos.index',
                     'admin.stasi.index'
-                  ]) }"
-              >
+                  ])
+                }">
                 Profil Gereja
                 <ChevronDownIcon class="ml-1 h-4 w-4 text-gray-800" />
               </button>
@@ -49,26 +45,22 @@
           </Dropdown>
 
           <!-- Jadwal Turne -->
-          <NavLink
-            :href="route('admin.jadwal-turne.index')"
-            :active="route().current('admin.jadwal-turne.index')"
-            class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:text-gray-900"
-            active-class="underline"
-          >
+          <NavLink :href="route('admin.jadwal-turne.index')" :active="route().current('admin.jadwal-turne.index')"
+            class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:text-gray-900" active-class="underline">
             Jadwal Turne
           </NavLink>
 
           <!-- Informasi Gereja -->
           <Dropdown align="left" width="48">
             <template #trigger>
-              <button
-                class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-800 hover:text-gray-900"
-                :class="{ 'underline': isAnyActive([
+              <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-800 hover:text-gray-900"
+                :class="{
+                  'underline': isAnyActive([
                     'admin.donasi.index',
                     'admin.info.index',
                     'admin.kontak.index'
-                  ]) }"
-              >
+                  ])
+                }">
                 Informasi Gereja
                 <ChevronDownIcon class="ml-1 h-4 w-4 text-gray-800" />
               </button>
@@ -83,13 +75,13 @@
           <!-- Berita -->
           <Dropdown align="left" width="48">
             <template #trigger>
-              <button
-                class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-800 hover:text-gray-900"
-                :class="{ 'underline': isAnyActive([
+              <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-800 hover:text-gray-900"
+                :class="{
+                  'underline': isAnyActive([
                     'admin.berita.index',
                     'admin.kegiatan-foto.index'
-                  ]) }"
-              >
+                  ])
+                }">
                 Berita
                 <ChevronDownIcon class="ml-1 h-4 w-4 text-gray-800" />
               </button>
@@ -107,7 +99,8 @@
           <div class="hidden sm:flex sm:items-center sm:ms-6">
             <Dropdown align="right" width="48">
               <template #trigger>
-                <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-800 hover:text-gray-900">
+                <button
+                  class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-800 hover:text-gray-900">
                   {{ $page.props.auth.user.name }}
                   <ChevronDownIcon class="ml-1 h-4 w-4 text-gray-800" />
                 </button>
@@ -120,12 +113,10 @@
           </div>
           <!-- Hamburger -->
           <div class="sm:hidden -me-2">
-            <button
-              @click="showingNavigationDropdown = !showingNavigationDropdown"
-              class="inline-flex items-center justify-center p-2 rounded-md text-gray-800 hover:text-gray-900 focus:outline-none"
-            >
+            <button @click="showingNavigationDropdown = !showingNavigationDropdown"
+              class="inline-flex items-center justify-center p-2 rounded-md text-gray-800 hover:text-gray-900 focus:outline-none">
               <Bars3Icon v-if="!showingNavigationDropdown" class="h-6 w-6" />
-              <XMarkIcon v-else                      class="h-6 w-6" />
+              <XMarkIcon v-else class="h-6 w-6" />
             </button>
           </div>
         </div>
@@ -134,11 +125,8 @@
       <!-- Mobile Menu -->
       <div v-show="showingNavigationDropdown" class="sm:hidden bg-white border-b border-gray-100">
         <div class="px-2 pt-2 pb-3 space-y-1">
-          <ResponsiveNavLink
-            :href="route('admin.dashboard')"
-            :active="route().current('admin.dashboard')"
-            class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-gray-900"
-          >
+          <ResponsiveNavLink :href="route('admin.dashboard')" :active="route().current('admin.dashboard')"
+            class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:text-gray-900">
             Dashboard
           </ResponsiveNavLink>
           <!-- tambah link mobile sesuai kebutuhan -->
@@ -147,7 +135,7 @@
     </nav>
 
     <!-- HEADER & CONTENT WRAPPER -->
-    <div class="flex-1 pt-16">
+    <div class="flex-1 pt-16 bg-white">
       <!-- Page Heading -->
       <header v-if="$slots.header" class="bg-white shadow">
         <div class="max-w-7xl mx-auto px-4 py-6">
@@ -155,7 +143,7 @@
         </div>
       </header>
       <!-- Page Content -->
-      <main class="bg-white flex-1">
+      <main class="flex-1 text-black">
         <slot />
       </main>
     </div>
@@ -198,5 +186,7 @@ function isAnyActive(names) {
 </script>
 
 <style scoped>
-/* tidak perlu override khusus */
+input, textarea, select {
+  color: #000;
+}
 </style>

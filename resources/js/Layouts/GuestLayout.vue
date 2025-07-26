@@ -145,5 +145,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 </script>
 
 <style scoped>
-/* jika perlu override spacing atau shadow */
+input, textarea, select {
+  color: #000;
+}
 </style>

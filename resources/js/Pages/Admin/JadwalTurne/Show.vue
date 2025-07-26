@@ -1,15 +1,12 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, Link } from '@inertiajs/vue3'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 
-const props = defineProps({
-  jadwalTurne: Object
-})
+const props = defineProps({ jadwalTurne: Object })
 </script>
 
 <template>
   <Head title="Detail Jadwal Turne" />
-
   <AuthenticatedLayout>
     <template #header>
       <div class="flex justify-between items-center">
@@ -20,32 +17,32 @@ const props = defineProps({
 
     <div class="py-6 max-w-3xl mx-auto bg-white p-6 rounded shadow space-y-4">
       <div>
-        <h3 class="font-medium text-gray-700">Lokasi</h3>
-        <p class="mt-1">{{ props.jadwalTurne.lokasi }}</p>
+        <h3 class="font-medium text-gray-700">Stasi</h3>
+        <p class="mt-1 text-gray-800">{{ props.jadwalTurne.stasi.nama_stasi }}</p>
       </div>
       <div class="grid grid-cols-2 gap-4">
         <div>
           <h3 class="font-medium text-gray-700">Tanggal</h3>
-          <p class="mt-1">{{ props.jadwalTurne.tanggal }}</p>
+          <p class="mt-1 text-gray-800">{{ props.jadwalTurne.tanggal }}</p>
         </div>
         <div>
           <h3 class="font-medium text-gray-700">Hari</h3>
-          <p class="mt-1">{{ props.jadwalTurne.hari }}</p>
+          <p class="mt-1 text-gray-800">{{ props.jadwalTurne.hari }}</p>
         </div>
       </div>
       <div class="grid grid-cols-2 gap-4">
         <div>
           <h3 class="font-medium text-gray-700">Jam Mulai</h3>
-          <p class="mt-1">{{ props.jadwalTurne.jam_mulai }}</p>
+          <p class="mt-1 text-gray-800">{{ props.jadwalTurne.jam_mulai }}</p>
         </div>
         <div>
           <h3 class="font-medium text-gray-700">Romo</h3>
-          <p class="mt-1">{{ props.jadwalTurne.romo.nama }}</p>
+          <p class="mt-1 text-gray-800">{{ props.jadwalTurne.romo.nama }}</p>
         </div>
       </div>
       <div>
         <h3 class="font-medium text-gray-700">Deskripsi</h3>
-        <p class="mt-1 whitespace-pre-line">{{ props.jadwalTurne.deskripsi }}</p>
+        <p class="mt-1 text-gray-800 whitespace-pre-line">{{ props.jadwalTurne.deskripsi }}</p>
       </div>
     </div>
   </AuthenticatedLayout>

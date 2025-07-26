@@ -49,7 +49,7 @@ function submit() {
               required
               autofocus
               autocomplete="username"
-              class="mt-1 block w-full"
+              class="mt-1 block w-full text-black"
             />
             <InputError :message="form.errors.email" class="mt-1" />
           </div>
@@ -63,7 +63,7 @@ function submit() {
               v-model="form.password"
               required
               autocomplete="current-password"
-              class="mt-1 block w-full"
+              class="mt-1 block w-full text-black"
             />
             <InputError :message="form.errors.password" class="mt-1" />
           </div>
