@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\KontakController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -81,7 +79,7 @@ Route::middleware(['auth', 'verified'])
           Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
           // Resource CRUD
-          Route::resource('berita', \App\Http\Controllers\Admin\BeritaController::class);
+          Route::resource('berita', \App\Http\Controllers\Admin\BeritaController::class)->parameters(['berita' => 'berita']);
           Route::resource('jadwal-turne', \App\Http\Controllers\Admin\JadwalTurneController::class);
           Route::resource('stasi', \App\Http\Controllers\Admin\StasiController::class);
           Route::resource('visimisi', \App\Http\Controllers\Admin\VisimisiController::class);

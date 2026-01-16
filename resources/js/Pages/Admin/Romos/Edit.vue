@@ -1,21 +1,28 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3'
+import { Head, Link, useForm } from '@inertiajs/vue3'   // ← WAJIB ganti ini
 
 const props = defineProps({
   romo: Object,
 })
 
 const form = useForm({
-  nama: props.omo.nama,    // pastikan prop namanya sesuai
+  nama: props.romo.nama,
   isi: props.romo.isi,
   foto: null,
 })
 
 function submit() {
-  form.post(route('admin.romos.update', props.romo.id), {
+  form.transform(data => ({
+    ...data,
     _method: 'patch',
-    preserveScroll: true,
+  })).post(route('admin.romos.update', props.romo.id), {
+    forceFormData: true,
+    preserveScroll: false,
+    onError: (errors) => {
+      console.error(errors)
+      alert('Update gagal')
+    }
   })
 }
 </script>
@@ -61,15 +68,16 @@ function submit() {
             Foto Baru (kosongkan untuk tidak diubah)
           </label>
           <input
-            @change="e => form.foto = e.target.files[0]"
             type="file"
             accept="image/*"
+            @change="e => form.foto = e.target.files[0]"
             class="mt-1 block w-full"
           />
           <div v-if="form.errors.foto" class="text-red-600 text-sm">
             {{ form.errors.foto }}
           </div>
-          <div class="mt-2">
+
+          <div v-if="props.romo.foto" class="mt-2">
             <img
               :src="`/storage/${props.romo.foto}`"
               alt="Foto Lama"

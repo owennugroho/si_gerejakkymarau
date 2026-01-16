@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Berita;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 
 class BeritaController extends Controller
 {
     public function index()
     {
-        $items = Berita::all();
         return Inertia::render('Admin/Berita/Index', [
-            'beritas' => $items,
+            'beritas' => Berita::latest()->get(),
         ]);
     }
 
@@ -25,14 +25,13 @@ class BeritaController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'judul'   => 'required|string|max:255',
-            'penulis' => 'required|string|max:255',
-            'kutipan' => 'nullable|string',
-            'foto'    => 'nullable|image|max:2048',  // if you plan on uploading images
-            'isi'     => 'required|string',
+            'judul'    => 'required|string|max:255',
+            'penulis'  => 'required|string|max:255',
+            'kutipan'  => 'nullable|string',
+            'foto'     => 'nullable|image|max:2048',
+            'isi'      => 'required|string',
         ]);
 
-        // if you're handling uploads:
         if ($request->hasFile('foto')) {
             $data['foto'] = $request->file('foto')->store('berita', 'public');
         }
@@ -49,6 +48,7 @@ class BeritaController extends Controller
         ]);
     }
 
+    // ⚠️ WAJIB pakai model binding (JANGAN $id)
     public function edit(Berita $berita)
     {
         return Inertia::render('Admin/Berita/Edit', [
@@ -59,14 +59,21 @@ class BeritaController extends Controller
     public function update(Request $request, Berita $berita)
     {
         $data = $request->validate([
-            'judul'   => 'required|string|max:255',
-            'penulis' => 'required|string|max:255',
-            'kutipan' => 'nullable|string',
-            'foto'    => 'nullable|image|max:2048',
-            'isi'     => 'required|string',
+            'judul'    => 'required|string|max:255',
+            'penulis'  => 'required|string|max:255',
+            'kutipan'  => 'nullable|string',
+            'foto'     => 'nullable|image|max:2048',
+            'isi'      => 'required|string',
         ]);
 
         if ($request->hasFile('foto')) {
+
+            // hapus foto lama
+            if ($berita->foto) {
+                Storage::disk('public')->delete($berita->foto);
+            }
+
+            // simpan foto baru
             $data['foto'] = $request->file('foto')->store('berita', 'public');
         }
 
@@ -77,7 +84,14 @@ class BeritaController extends Controller
 
     public function destroy(Berita $berita)
     {
+        // hapus foto dari storage
+        if ($berita->foto) {
+            Storage::disk('public')->delete($berita->foto);
+        }
+
+        // hapus data dari DB
         $berita->delete();
+
         return redirect()->route('admin.berita.index');
     }
 }

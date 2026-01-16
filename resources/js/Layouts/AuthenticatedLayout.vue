@@ -154,7 +154,7 @@
         <!-- Footer content… -->
       </div>
       <div class="text-center text-gray-200 mt-8 text-sm">
-        © {{ new Date().getFullYear() }} Gereja Kanak-kanak Yesus Marau
+        © 2025 Gereja Kanak-kanak Yesus Marau
       </div>
     </footer>
 

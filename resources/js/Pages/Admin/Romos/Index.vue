@@ -30,7 +30,7 @@ function destroy(id) {
           href="/admin/romos/create"
           class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
-          Tambah Romos
+          Tambah Romo
         </Link>
 
         <!-- tabel data -->
@@ -38,29 +38,35 @@ function destroy(id) {
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No.</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Foto</th>
                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Aksi</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr v-for="romo in romos" :key="romo.id">
-                <td class="px-6 py-4 whitespace-nowrap">{{ romo.id }}</td>
+              <tr v-for="(romo, index) in romos" :key="romo.id">
+                <td class="px-6 py-4 whitespace-nowrap">{{ index+1 }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ romo.nama }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <img :src="`/storage/${romo.foto}`" alt="" class="h-12 w-12 object-cover rounded" />
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-center space-x-2">
                   <Link
+                    :href="route('admin.romos.show', romo.id)"
+                    class="text-indigo-600 hover:text-indigo-900"
+                  >
+                    Lihat
+                  </Link>
+                  <Link
                     :href="route('admin.romos.edit', romo.id)"
-                    class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+                    class="text-yellow-600 hover:text-yellow-900"
                   >
                     Edit
                   </Link>
                   <button
                     @click="destroy(romo.id)"
-                    class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+                    class="text-red-600 hover:text-red-900"
                   >
                     Hapus
                   </button>

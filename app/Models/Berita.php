@@ -11,9 +11,9 @@ class Berita extends Model
     
     protected $fillable = [
         'judul',
-        'penulis',    // Jika Anda memutuskan untuk menyimpan nama penulis
-        'kutipan',    // Jika ingin menyimpan ringkasan berita
-        'foto',       // Menyimpan path/URL foto kegiatan
+        'penulis',    
+        'kutipan',    
+        'foto',      
         'isi',
     ];
 }

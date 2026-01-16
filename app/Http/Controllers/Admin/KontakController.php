@@ -51,12 +51,12 @@ class KontakController extends Controller
         ]);
     }
     public function destroy(Kontak $kontak)
-{
-    $kontak->delete();
+    {
+        $kontak->delete();
 
-    // Redirect kembali ke index dengan flash (opsional)
-    return redirect()
-        ->route('admin.kontak.index')
-        ->with('success', 'Pesan kontak berhasil dihapus.');
-}
+        // Redirect kembali ke index dengan flash (opsional)
+        return redirect()
+            ->route('admin.kontak.index')
+            ->with('success', 'Pesan kontak berhasil dihapus.');
+    }
 }

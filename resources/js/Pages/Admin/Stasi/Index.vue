@@ -35,7 +35,7 @@ function destroy(id) {
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No.</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Desa</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Umat (L/P)</th>
@@ -45,8 +45,8 @@ function destroy(id) {
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
-            <tr v-for="item in props.stasis" :key="item.id">
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ item.id }}</td>
+            <tr v-for="(item, index) in props.stasis" :key="item.id">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ index + 1 }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm">{{ item.nama_stasi }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm">{{ item.desa }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm">

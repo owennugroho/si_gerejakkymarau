@@ -53,6 +53,7 @@ class DonasiController extends Controller
 
     public function edit(Donasi $donasi)
     {
+
         return Inertia::render('Admin/Donasi/Edit', [
             'donasi' => $donasi,
         ]);
@@ -60,24 +61,27 @@ class DonasiController extends Controller
 
     public function update(Request $request, Donasi $donasi)
     {
-        $data = $request->validate([
+        $data = $request->all();
+
+        $validated = validator($data, [
             'nama_bank' => 'required|string|max:255',
             'nomor_rekening' => 'required|string|max:255',
             'atas_nama' => 'required|string|max:255',
             'qris_image' => 'nullable|image|mimes:jpg,png,jpeg,svg|max:2048',
             'keterangan' => 'nullable|string',
-        ]);
+        ])->validate();
 
         if ($request->hasFile('qris_image')) {
-            // (Opsional) hapus file lama:
-            \Storage::disk('public')->delete($donasi->qris_image);
+            if ($donasi->qris_image) {
+                \Storage::disk('public')->delete($donasi->qris_image);
+            }
 
-            $data['qris_image'] = $request
+            $validated['qris_image'] = $request
                 ->file('qris_image')
                 ->store('donasi/qris', 'public');
         }
 
-        $donasi->update($data);
+        $donasi->update($validated);
 
         return redirect()->route('admin.donasi.index');
     }

@@ -10,11 +10,11 @@ const form = useForm({
 })
 
 function submit() {
-  form.post(route('admin.visimisi.update', props.visimisi.id), {
-    _method: 'patch',
+  form.patch(route('admin.visimisi.update', props.visimisi.id), {
     preserveScroll: true,
   })
 }
+
 </script>
 
 <template>

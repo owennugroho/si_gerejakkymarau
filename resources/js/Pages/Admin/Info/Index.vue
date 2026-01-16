@@ -47,15 +47,15 @@ function destroy(id) {
             <table class="min-w-full divide-y divide-gray-200 mb-4">
               <thead class="bg-gray-50">
                 <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No.</th>
                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Judul</th>
                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Isi</th>
                   <th class="px-6 py-3"></th>
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="info in props.infos" :key="info.id">
-                  <td class="px-6 py-4 whitespace-nowrap">{{ info.id }}</td>
+                <tr v-for="(info, index) in props.infos" :key="info.id">
+                  <td class="px-6 py-4 whitespace-nowrap">{{ index+1 }}</td>
                   <td class="px-6 py-4 whitespace-nowrap">{{ info.judul }}</td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     {{ info.isi.length > 50 
@@ -67,15 +67,15 @@ function destroy(id) {
                     <Link
                       :href="route('admin.info.show', info.id)"
                       class="text-blue-600 hover:underline"
-                    >View</Link>
+                    >Lihat</Link>
                     <Link
                       :href="route('admin.info.edit', info.id)"
-                      class="text-green-600 hover:underline"
+                      class="text-yellow-600 hover:underline"
                     >Edit</Link>
                     <button
                       @click="destroy(info.id)"
                       class="text-red-600 hover:underline"
-                    >Delete</button>
+                    >Hapus</button>
                   </td>
                 </tr>
                 <tr v-if="props.infos.length === 0">

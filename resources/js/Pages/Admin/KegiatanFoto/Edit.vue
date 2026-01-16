@@ -15,7 +15,15 @@ function onFileChange(e) {
 }
 
 function submit() {
-  form.put(route('admin.kegiatan-foto.update', props.kegiatanfoto.id))
+  form
+    .transform((data) => ({
+      ...data,
+      _method: 'put',
+    }))
+    .post(route('admin.kegiatan-foto.update', props.kegiatanfoto.id), {
+      forceFormData: true,
+      preserveScroll: true,
+    })
 }
 </script>
 

@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\KegiatanFoto;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 
 class KegiatanFotoController extends Controller
 {
     public function index()
     {
-        $items = KegiatanFoto::all();
         return Inertia::render('Admin/KegiatanFoto/Index', [
-            'kegiatanfotos' => $items,
+            'kegiatanfotos' => KegiatanFoto::all(),
         ]);
     }
 
@@ -25,53 +25,64 @@ class KegiatanFotoController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'judul'      => 'required|string|max:255',
-            'deskripsi'  => 'nullable|string',
-            'foto'       => 'required|image|max:4096',
+            'judul'     => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'foto'      => 'required|image|max:4096',
         ]);
 
         $data['foto'] = $request->file('foto')->store('kegiatanfoto', 'public');
 
         KegiatanFoto::create($data);
 
-        // ganti route-nya ke kebab-case
         return redirect()->route('admin.kegiatan-foto.index');
     }
 
-    public function show(KegiatanFoto $kegiatanfoto)
+    // 🔥 PENTING: harus $kegiatan_foto (sesuai {kegiatan_foto} di route)
+    public function show(KegiatanFoto $kegiatan_foto)
     {
         return Inertia::render('Admin/KegiatanFoto/Show', [
-            'kegiatanfoto' => $kegiatanfoto,
+            'kegiatanfoto' => $kegiatan_foto,
         ]);
     }
 
-    public function edit(KegiatanFoto $kegiatanfoto)
+    public function edit(KegiatanFoto $kegiatan_foto)
     {
         return Inertia::render('Admin/KegiatanFoto/Edit', [
-            'kegiatanfoto' => $kegiatanfoto,
+            'kegiatanfoto' => $kegiatan_foto,
         ]);
     }
 
-    public function update(Request $request, KegiatanFoto $kegiatanfoto)
+    public function update(Request $request, KegiatanFoto $kegiatan_foto)
     {
         $data = $request->validate([
-            'judul'      => 'required|string|max:255',
-            'deskripsi'  => 'nullable|string',
-            'foto'       => 'nullable|image|max:4096',
+            'judul'     => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'foto'      => 'nullable|image|max:4096',
         ]);
 
         if ($request->hasFile('foto')) {
+            // hapus foto lama jika ada
+            if ($kegiatan_foto->foto) {
+                Storage::disk('public')->delete($kegiatan_foto->foto);
+            }
+
+            // simpan foto baru
             $data['foto'] = $request->file('foto')->store('kegiatanfoto', 'public');
         }
 
-        $kegiatanfoto->update($data);
+        $kegiatan_foto->update($data);
 
         return redirect()->route('admin.kegiatan-foto.index');
     }
 
-    public function destroy(KegiatanFoto $kegiatanfoto)
+    public function destroy(KegiatanFoto $kegiatan_foto)
     {
-        $kegiatanfoto->delete();
+        if ($kegiatan_foto->foto) {
+            Storage::disk('public')->delete($kegiatan_foto->foto);
+        }
+
+        $kegiatan_foto->delete();
+
         return redirect()->route('admin.kegiatan-foto.index');
     }
 }

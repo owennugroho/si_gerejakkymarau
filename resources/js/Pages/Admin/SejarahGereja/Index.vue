@@ -40,15 +40,15 @@ function snippet(text, len = 50) {
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No.</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Judul</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cuplikan</th>
               <th class="px-6 py-3"></th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
-            <tr v-for="item in props.sejarahGerejas" :key="item.id">
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ item.id }}</td>
+            <tr v-for="(item, index) in props.sejarahGerejas" :key="item.id">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ index+1 }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm">{{ item.judul }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm">{{ snippet(item.isi) }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">

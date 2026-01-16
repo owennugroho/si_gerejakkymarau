@@ -20,8 +20,8 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
-          <tr v-for="k in kontaks" :key="k.id">
-            <td class="px-4 py-2 text-sm">{{ k.id }}</td>
+          <tr v-for="(k, index) in kontaks" :key="k.id">
+            <td class="px-4 py-2 text-sm">{{ index+1 }}</td>
             <td class="px-4 py-2 text-sm">{{ k.name }}</td>
             <td class="px-4 py-2 text-sm">{{ k.email }}</td>
             <td class="px-4 py-2 text-sm">{{ k.message }}</td>

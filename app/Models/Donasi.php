@@ -9,9 +9,6 @@ class Donasi extends Model
 {
     use HasFactory;
 
-    // Jika tabelmu bernama "donasis" (sesuai migration), tidak perlu override $table.
-    // protected $table = 'donasis';
-
     protected $fillable = [
         'nama_bank',
         'nomor_rekening',

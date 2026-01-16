@@ -8,10 +8,10 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
         <!-- Logo + Title -->
         <Link href="/" class="flex items-center space-x-2">
-        <ApplicationLogo class="h-10 w-10 text-white" />
-        <span class="text-xl font-bold text-white">
-          Gereja Kanak-kanak Yesus Marau
-        </span>
+          <ApplicationLogo class="h-10 w-10 text-white" />
+          <span class="text-xl font-bold text-white">
+            Gereja Kanak-kanak Yesus Marau
+          </span>
         </Link>
 
         <!-- Menu Desktop -->
@@ -19,7 +19,7 @@
           <!-- Beranda -->
           <Link href="/" class="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium"
             :class="{ 'underline': isActive(route('home')) }">
-          Beranda
+            Beranda
           </Link>
 
           <!-- Dropdowns -->
@@ -50,9 +50,13 @@
       </div>
     </nav>
 
-    <!-- KOSONGKAN AREA UNTUK HERO -->
+    <!-- UNTUK HERO DAN PARAGRAF-->
     <main class="flex-1 bg-[#FFF5EF] pt-16">
-      <slot />
+      <div class="max-w-5xl mx-auto px-6 py-12">
+        <div class="prose prose-lg max-w-none text-justify leading-relaxed whitespace-pre-line text-green-900">
+          <slot />
+        </div>
+      </div>
     </main>
 
     <!-- FOOTER -->
@@ -86,7 +90,7 @@
         </div>
       </div>
       <div class="text-center text-gray-200 mt-8 text-sm">
-        © {{ new Date().getFullYear() }} Gereja Kanak-kanak Yesus Marau
+        © 2025 Gereja Kanak-kanak Yesus Marau
       </div>
     </footer>
     <VisitUsPanel />
@@ -145,7 +149,9 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 </script>
 
 <style scoped>
-input, textarea, select {
+input,
+textarea,
+select {
   color: #000;
 }
 </style>
