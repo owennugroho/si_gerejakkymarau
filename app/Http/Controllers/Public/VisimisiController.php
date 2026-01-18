@@ -11,7 +11,7 @@ class VisimisiController extends Controller
     public function index()
     {
         // Ambil semua entri
-        $visimisis = Visimisi::orderByDesc('created_at')->get();
+        $visimisis = Visimisi::orderBy('created_at')->get();
 
         return Inertia::render('Public/Visimisi/Index', [
             'visimisis' => $visimisis,

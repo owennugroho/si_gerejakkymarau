@@ -3,46 +3,44 @@ import { Head, Link } from '@inertiajs/vue3'
 import GuestLayout from '@/Layouts/GuestLayout.vue'
 
 const props = defineProps({
-  foto: Object, // { id, judul, deskripsi, foto, created_at, … }
+  foto: Object,
 })
 </script>
 
 <template>
+
   <Head :title="foto.judul" />
 
   <GuestLayout>
-    <div class="container mx-auto px-4 py-12">
-      <Link
-        :href="route('foto-kegiatan.index')"
-        class="inline-block text-gray-600 hover:underline mb-6"
-      >
-        ← Kembali ke Galeri
-      </Link>
+    <section class="max-w-4xl mx-auto py-16 px-6">
 
-      <h1 class="text-3xl font-bold text-gray-900 text-center mb-8">
+      <!-- Judul -->
+      <h1 class="text-3xl md:text-4xl font-bold text-center text-amber-600 mb-8">
         {{ foto.judul }}
       </h1>
 
-      <div class="max-w-3xl mx-auto">
-        <img
-          v-if="foto.foto"
-          :src="`/storage/${foto.foto}`"
-          alt="Foto {{ foto.judul }}"
-          class="w-full rounded-lg shadow-lg mb-6"
-        />
+      <div class="max-w-3xl mx-auto space-y-6">
 
-        <p class="text-gray-700 leading-relaxed mb-6">
-          {{ foto.deskripsi }}
-        </p>
+        <!-- Foto -->
+        <img v-if="foto.foto" :src="`/storage/${foto.foto}`" :alt="foto.judul" class="w-full rounded-lg shadow-md" />
 
-        <p class="text-sm text-gray-500">
-          Diunggah: {{ new Date(foto.created_at).toLocaleDateString() }}
+        <div class="text-gray-800 leading-relaxed text-justify space-y-4">
+          <p v-html="foto.deskripsi"></p>
+        </div>
+
+        <!-- Tanggal -->
+        <p class="text-sm text-gray-500 text-center mt-6">
+          Diunggah: {{ new Date(foto.created_at).toLocaleDateString('id-ID') }}
         </p>
       </div>
-    </div>
+
+      <div class="mt-10 text-center">
+        <Link :href="route('foto-kegiatan.index')"
+          class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">
+          Kembali ke Foto Kegiatan
+        </Link>
+      </div>
+
+    </section>
   </GuestLayout>
 </template>
-
-<style scoped>
-/* kalau perlu override tambahan */
-</style>

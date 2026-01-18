@@ -22,6 +22,7 @@ export default {
     forms,
     lineClamp, 
     daisyui,
+    require('@tailwindcss/typography'),
   ],
 
   daisyui: {

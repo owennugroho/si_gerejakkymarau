@@ -52,11 +52,7 @@
 
     <!-- UNTUK HERO DAN PARAGRAF-->
     <main class="flex-1 bg-[#FFF5EF] pt-16">
-      <div class="max-w-5xl mx-auto px-6 py-12">
-        <div class="prose prose-lg max-w-none text-justify leading-relaxed whitespace-pre-line text-green-900">
-          <slot />
-        </div>
-      </div>
+      <slot />
     </main>
 
     <!-- FOOTER -->
@@ -153,5 +149,20 @@ input,
 textarea,
 select {
   color: #000;
+}
+
+:deep(.prose p) {
+  text-align: justify;
+  line-height: 1.85;
+  margin-bottom: 1rem;
+}
+
+:deep(.formatted-content p) {
+  margin-bottom: 1.1rem;
+  line-height: 1.85;
+}
+
+:deep(.formatted-content) {
+  white-space: pre-line;
 }
 </style>

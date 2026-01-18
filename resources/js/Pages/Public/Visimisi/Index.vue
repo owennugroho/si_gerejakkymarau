@@ -8,28 +8,35 @@ const props = defineProps({
 </script>
 
 <template>
+
   <Head title="Visi & Misi" />
 
   <GuestLayout>
-    <div class="max-w-3xl mx-auto py-8 px-4 space-y-12">
+    <section class="max-w-4xl mx-auto py-16 px-6 space-y-12">
+
+      <h1 class="text-3xl md:text-4xl font-bold text-center text-amber-600">
+        Visi & Misi
+      </h1>
+
       <template v-if="visimisis.length">
-        <div
-          v-for="item in visimisis"
-          :key="item.id"
-          class="space-y-6"
-        >
-          <h2 class="text-3xl md:text-4xl font-bold mb-6 text-center text-amber-500">
+
+        <div v-for="item in visimisis" :key="item.id" class="space-y-6">
+
+          <h2 class="text-2xl md:text-3xl font-semibold text-center text-green-800">
             {{ item.judul }}
           </h2>
-          <div class="prose prose-lg mx-auto text-gray-800">
-            <div v-html="item.isi"></div>
-          </div>
+
+          <div class="text-gray-800 text-lg leading-relaxed text-justify space-y-4" v-html="item.isi"></div>
+
         </div>
+
       </template>
-      <div v-else class="text-center text-gray-500">
+
+      <div v-else class="text-center text-gray-500 italic">
         Belum ada konten Visi & Misi.
       </div>
-    </div>
+
+    </section>
   </GuestLayout>
 </template>
 

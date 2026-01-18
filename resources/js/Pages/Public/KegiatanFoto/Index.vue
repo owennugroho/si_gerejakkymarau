@@ -11,6 +11,7 @@ const props = defineProps({
 </script>
 
 <template>
+
   <Head title="Galeri Foto Kegiatan" />
 
   <GuestLayout>
@@ -21,24 +22,13 @@ const props = defineProps({
 
       <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         <template v-if="fotos.length">
-          <Link
-            v-for="f in fotos"
-            :key="f.id"
-            :href="route('foto-kegiatan.show', f.id)"
-            class="group block bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition"
-          >
+          <Link v-for="f in fotos" :key="f.id" :href="route('foto-kegiatan.show', f.id)"
+            class="group block bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition">
             <!-- Thumbnail -->
             <div class="h-48 overflow-hidden">
-              <img
-                v-if="f.foto"
-                :src="`/storage/${f.foto}`"
-                alt="Foto {{ f.judul }}"
-                class="w-full h-full object-cover"
-              />
-              <div
-                v-else
-                class="flex h-full items-center justify-center bg-gray-100 text-gray-400"
-              >
+              <img v-if="f.foto" :src="`/storage/${f.foto}`" alt="Foto {{ f.judul }}"
+                class="w-full h-full object-cover" />
+              <div v-else class="flex h-full items-center justify-center bg-gray-100 text-gray-400">
                 No Image
               </div>
             </div>
@@ -60,10 +50,7 @@ const props = defineProps({
           </Link>
         </template>
 
-        <div
-          v-else
-          class="col-span-full text-center text-gray-500 py-16"
-        >
+        <div v-else class="col-span-full text-center text-gray-500 py-16">
           Belum ada foto kegiatan.
         </div>
       </div>
@@ -71,5 +58,4 @@ const props = defineProps({
   </GuestLayout>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

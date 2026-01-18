@@ -8,32 +8,59 @@ const props = defineProps({
 </script>
 
 <template>
+
   <Head :title="berita.judul" />
 
   <GuestLayout>
-    <div class="max-w-3xl mx-auto py-8 px-4">
-      <h1 class="text-3xl font-semibold mb-4 text-gray-900 text-center">
+    <article class="max-w-3xl mx-auto py-12 px-6">
+      <!-- Judul -->
+      <h1 class="text-3xl md:text-4xl font-bold mb-3 text-center text-amber-600">
         {{ berita.judul }}
       </h1>
 
-      <p class="text-sm text-gray-600 mb-6 text-center">
+      <!-- Penulis -->
+      <p class="text-sm text-gray-600 mb-6 text-center italic">
         Oleh {{ berita.penulis }}
       </p>
 
-      <img
-        v-if="berita.foto"
-        :src="`/storage/${berita.foto}`"
-        alt="Foto Berita"
-        class="w-full h-auto rounded mb-6"
-      />
+      <!-- Foto -->
+      <img v-if="berita.foto" :src="`/storage/${berita.foto}`" alt="Foto Berita"
+        class="w-full h-auto rounded mb-8 shadow" />
 
-      <div class="prose prose-lg mx-auto text-gray-800">
-        <div v-html="berita.isi"></div>
+      <!-- ISI BERITA (YANG PENTING) -->
+      <div v-if="berita && berita.isi" class="berita-content text-gray-800 text-justify" v-html="berita.isi"></div>
+
+      <div v-else class="text-center text-gray-500 mt-8">
+        Konten berita belum tersedia.
       </div>
-    </div>
+
+      <div class="mt-10 text-center">
+        <Link :href="route('berita.index')" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">
+          Kembali ke Berita
+        </Link>
+      </div>
+    </article>
   </GuestLayout>
 </template>
 
 <style scoped>
-/* tidak ada perubahan khusus */
+.berita-content p {
+  text-align: justify;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+/* Kalau ada list */
+.berita-content ul,
+.berita-content ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Kalau ada heading dalam isi */
+.berita-content h2,
+.berita-content h3 {
+  margin-top: 1.2rem;
+  margin-bottom: 0.8rem;
+}
 </style>
