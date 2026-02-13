@@ -71,7 +71,7 @@
         <div>
           <h3 class="font-semibold mb-2">Jadwal Ekaristi</h3>
           <ul class="space-y-1 text-sm">
-            <li>Senin–Sabtu: 05.30 WIB</li>
+            <li>Senin–Sabtu: 05.15 WIB</li>
             <li>Minggu: 07.30 WIB</li>
           </ul>
         </div>

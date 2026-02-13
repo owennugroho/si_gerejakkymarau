@@ -22,7 +22,7 @@
         <!-- Kolom Misa Harian -->
         <div class="md:w-1/4 text-center">
           <h3 class="text-xl font-semibold text-green-800 mb-2">Misa Harian</h3>
-          <p class="text-lg text-yellow-500">Senin–Sabtu: 05.30 WIB</p>
+          <p class="text-lg text-yellow-500">Senin–Sabtu: 05.15 WIB</p>
         </div>
 
         <!-- Separator vertikal -->
