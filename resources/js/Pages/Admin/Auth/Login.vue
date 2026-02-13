@@ -5,11 +5,10 @@ import InputError  from '@/Components/InputError.vue'
 import InputLabel  from '@/Components/InputLabel.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import TextInput   from '@/Components/TextInput.vue'
-import { Head, Link, useForm } from '@inertiajs/vue3'
+import { Head, useForm } from '@inertiajs/vue3'
 
 defineProps({
-  canResetPassword: { type: Boolean },
-  status:           { type: String },
+  status: { type: String },
 })
 
 const form = useForm({
@@ -31,14 +30,16 @@ function submit() {
 
     <!-- Wrapper penuh, center vertikal & horizontal -->
     <div class="flex items-center justify-center min-h-screen bg-gray-100">
-      <!-- Card putih dengan max-w dan padding -->
+      <!-- Card putih -->
       <div class="w-full max-w-md bg-white shadow-md rounded-lg p-8">
+
         <!-- Flash status -->
         <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
           {{ status }}
         </div>
 
         <form @submit.prevent="submit" class="space-y-6">
+
           <!-- Email -->
           <div>
             <InputLabel for="email" value="Email" />
@@ -77,23 +78,15 @@ function submit() {
           </div>
 
           <!-- Actions -->
-          <div class="flex items-center justify-between">
-            <Link
-              v-if="canResetPassword"
-              :href="route('password.request')"
-              class="text-sm text-gray-600 hover:underline"
-            >
-              Forgot your password?
-            </Link>
-
+          <div class="flex items-center justify-end">
             <PrimaryButton
               type="submit"
               :disabled="form.processing"
-              class="ml-auto"
             >
               Log in
             </PrimaryButton>
           </div>
+
         </form>
       </div>
     </div>
