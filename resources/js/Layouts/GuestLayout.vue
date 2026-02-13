@@ -80,8 +80,7 @@
         <div>
           <h3 class="font-semibold mb-2">Donasi</h3>
           <p class="text-sm">
-            Bank CIMB Niaga: 700.169.577.400<br />
-            a.n. PGPM Gereja St. Antonius Kotabaru
+            <br />
           </p>
         </div>
       </div>
